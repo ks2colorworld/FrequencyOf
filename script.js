@@ -58,6 +58,15 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     analysis(config.selected);
   });
+  document.querySelector('#myword').addEventListener('keyup', function (e) {
+    config.languages[config.selected] = e.target.value;
+    document.querySelector('#myword').value = config.languages[config.selected];
+    chrome.storage.sync.set({
+      'config': config
+    });
+    if(e.target.value.slice(-1) != ',') {return;}
+    analysis(config.selected);
+  });
   chrome.storage.sync.get('config', function (e) {
     if (e.config){
       config = e.config;
